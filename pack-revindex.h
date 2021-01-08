@@ -3,11 +3,6 @@
 
 struct packed_git;
 
-struct revindex_entry {
-	off_t offset;
-	unsigned int nr;
-};
-
 int load_pack_revindex(struct packed_git *p);
 
 int offset_to_pack_pos(struct packed_git *p, off_t ofs, uint32_t *pos);
