@@ -318,7 +318,7 @@ test_expect_success SYMLINKS 'clone repo with symlinked or unknown files at obje
 		test_cmp T.objects T$option.objects &&
 		(
 			cd T$option/.git/objects &&
-			find . -type f | sort >../../../T$option.objects-files.raw &&
+			find . -type f | grep -v \.rev$ | sort >../../../T$option.objects-files.raw &&
 			find . -type l | sort >../../../T$option.objects-symlinks.raw
 		)
 	done &&

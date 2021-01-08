@@ -106,13 +106,13 @@ test_expect_success 'auto gc with too many loose objects does not attempt to cre
 	test_commit "$(test_oid obj2)" &&
 	# Our first gc will create a pack; our second will create a second pack
 	git gc --auto &&
-	ls .git/objects/pack | sort >existing_packs &&
+	ls .git/objects/pack | grep -v \.rev$ | sort >existing_packs &&
 	test_commit "$(test_oid obj3)" &&
 	test_commit "$(test_oid obj4)" &&
 
 	git gc --auto 2>err &&
 	test_i18ngrep ! "^warning:" err &&
-	ls .git/objects/pack/ | sort >post_packs &&
+	ls .git/objects/pack/ | grep -v \.rev$ | sort >post_packs &&
 	comm -1 -3 existing_packs post_packs >new &&
 	comm -2 -3 existing_packs post_packs >del &&
 	test_line_count = 0 del && # No packs are deleted
