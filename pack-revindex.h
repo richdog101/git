@@ -1,6 +1,8 @@
 #ifndef PACK_REVINDEX_H
 #define PACK_REVINDEX_H
 
+#define GIT_TEST_WRITE_REV_INDEX "GIT_TEST_WRITE_REV_INDEX"
+
 struct packed_git;
 
 int load_pack_revindex(struct packed_git *p);
