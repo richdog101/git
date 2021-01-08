@@ -1692,11 +1692,19 @@ void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
 		}
 
 		if (do_check_packed_object_crc && p->index_version > 1) {
-			struct revindex_entry *revidx = find_pack_revindex(p, obj_offset);
-			off_t len = revidx[1].offset - obj_offset;
-			if (check_pack_crc(p, &w_curs, obj_offset, len, revidx->nr)) {
+			uint32_t pos, nr;
+			off_t len;
+
+			if (offset_to_pack_pos(p, obj_offset, &pos) < 0) {
+				data = NULL;
+				goto out;
+			}
+
+			len = pack_pos_to_offset(p, pos + 1) - obj_offset;
+			nr = pack_pos_to_index(p, pos);
+			if (check_pack_crc(p, &w_curs, obj_offset, len, nr)) {
 				struct object_id oid;
-				nth_packed_object_id(&oid, p, revidx->nr);
+				nth_packed_object_id(&oid, p, nr);
 				error("bad packed object CRC for %s",
 				      oid_to_hex(&oid));
 				mark_bad_packed_object(p, oid.hash);
@@ -1779,11 +1787,11 @@ void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
 			 * This is costly but should happen only in the presence
 			 * of a corrupted pack, and is better than failing outright.
 			 */
-			struct revindex_entry *revidx;
+			uint32_t pos;
 			struct object_id base_oid;
-			revidx = find_pack_revindex(p, obj_offset);
-			if (revidx) {
-				nth_packed_object_id(&base_oid, p, revidx->nr);
+			if (!(offset_to_pack_pos(p, obj_offset, &pos))) {
+				nth_packed_object_id(&base_oid, p,
+						     pack_pos_to_index(p, pos));
 				error("failed to read delta base object %s"
 				      " at offset %"PRIuMAX" from %s",
 				      oid_to_hex(&base_oid), (uintmax_t)obj_offset,
