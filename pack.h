@@ -91,6 +91,10 @@ char *index_pack_lockfile(int fd);
 
 const char *write_rev_file(const char *rev_name, struct pack_idx_entry **objects, uint32_t nr_objects, const unsigned char *hash, unsigned flags);
 
+struct ref;
+
+void write_promisor_file(const char *promisor_name, struct ref **sought, int nr_sought);
+
 /*
  * The "hdr" output buffer should be at least this big, which will handle sizes
  * up to 2^67.
