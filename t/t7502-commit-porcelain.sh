@@ -529,7 +529,7 @@ try_commit () {
 	GIT_EDITOR=.git/FAKE_EDITOR git commit -a $* $use_template &&
 	case "$use_template" in
 	'')
-		test_i18ngrep ! "^## Custom template" .git/COMMIT_EDITMSG ;;
+		! grep "^## Custom template" .git/COMMIT_EDITMSG ;;
 	*)
 		test_i18ngrep "^## Custom template" .git/COMMIT_EDITMSG ;;
 	esac
@@ -549,7 +549,7 @@ try_commit_status_combo () {
 
 	test_expect_success 'commit --no-status' '
 		try_commit --no-status &&
-		test_i18ngrep ! "^# Changes to be committed:" .git/COMMIT_EDITMSG
+		! grep "^# Changes to be committed:" .git/COMMIT_EDITMSG
 	'
 
 	test_expect_success 'commit with commit.status = yes' '
@@ -561,7 +561,7 @@ try_commit_status_combo () {
 	test_expect_success 'commit with commit.status = no' '
 		test_config commit.status no &&
 		try_commit "" &&
-		test_i18ngrep ! "^# Changes to be committed:" .git/COMMIT_EDITMSG
+		! grep "^# Changes to be committed:" .git/COMMIT_EDITMSG
 	'
 
 	test_expect_success 'commit --status with commit.status = yes' '
@@ -573,7 +573,7 @@ try_commit_status_combo () {
 	test_expect_success 'commit --no-status with commit.status = yes' '
 		test_config commit.status yes &&
 		try_commit --no-status &&
-		test_i18ngrep ! "^# Changes to be committed:" .git/COMMIT_EDITMSG
+		! grep "^# Changes to be committed:" .git/COMMIT_EDITMSG
 	'
 
 	test_expect_success 'commit --status with commit.status = no' '
@@ -585,7 +585,7 @@ try_commit_status_combo () {
 	test_expect_success 'commit --no-status with commit.status = no' '
 		test_config commit.status no &&
 		try_commit --no-status &&
-		test_i18ngrep ! "^# Changes to be committed:" .git/COMMIT_EDITMSG
+		! grep "^# Changes to be committed:" .git/COMMIT_EDITMSG
 	'
 
 }

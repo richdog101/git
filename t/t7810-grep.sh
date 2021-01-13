@@ -969,7 +969,7 @@ do
 	"
 done
 
-test_expect_success !PTHREADS,C_LOCALE_OUTPUT 'grep --threads=N or pack.threads=N warns when no pthreads' '
+test_expect_success !PTHREADS 'grep --threads=N or pack.threads=N warns when no pthreads' '
 	git grep --threads=2 Hello hello_world 2>err &&
 	grep ^warning: err >warnings &&
 	test_line_count = 1 warnings &&
@@ -1259,7 +1259,7 @@ test_expect_success 'grep --no-index prefers paths to revs' '
 
 test_expect_success 'grep --no-index does not "diagnose" revs' '
 	test_must_fail git grep --no-index o :1:hello.c 2>err &&
-	test_i18ngrep ! -i "did you mean" err
+	! grep -i "did you mean" err
 '
 
 cat >expected <<EOF

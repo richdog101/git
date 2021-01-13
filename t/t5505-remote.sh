@@ -59,7 +59,7 @@ test_expect_success 'add remote whose URL agrees with url.<...>.insteadOf' '
 	git remote add myremote git@host.com:team/repo.git
 '
 
-test_expect_success C_LOCALE_OUTPUT 'remote information for the origin' '
+test_expect_success 'remote information for the origin' '
 	(
 		cd test &&
 		tokens_match origin "$(git remote)" &&
@@ -81,7 +81,7 @@ test_expect_success 'add another remote' '
 	)
 '
 
-test_expect_success C_LOCALE_OUTPUT 'check remote-tracking' '
+test_expect_success 'check remote-tracking' '
 	(
 		cd test &&
 		check_remote_track origin main side &&
@@ -107,7 +107,7 @@ test_expect_success 'remove remote' '
 	)
 '
 
-test_expect_success C_LOCALE_OUTPUT 'remove remote' '
+test_expect_success 'remove remote' '
 	(
 		cd test &&
 		tokens_match origin "$(git remote)" &&
@@ -1344,7 +1344,7 @@ test_expect_success 'unqualified <dst> refspec DWIM and advice' '
 			test_must_fail git -c advice.pushUnqualifiedRefName=false \
 				push origin $oid:dst 2>err &&
 			test_i18ngrep "error: The destination you" err &&
-			test_i18ngrep ! "hint: Did you mean" err ||
+			! grep "hint: Did you mean" err ||
 			exit_with=false
 		done &&
 		$exit_with

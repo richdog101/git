@@ -21,7 +21,7 @@ test_expect_success 'tag --contains <inexistent_tag>' '
 	test_must_fail git tag --contains "notag" >actual 2>actual.err &&
 	test_line_count = 0 actual &&
 	test_i18ngrep "error" actual.err &&
-	test_i18ngrep ! "usage" actual.err
+	! grep "usage" actual.err
 '
 
 test_expect_success 'tag --no-contains <existent_tag>' '
@@ -34,7 +34,7 @@ test_expect_success 'tag --no-contains <inexistent_tag>' '
 	test_must_fail git tag --no-contains "notag" >actual 2>actual.err &&
 	test_line_count = 0 actual &&
 	test_i18ngrep "error" actual.err &&
-	test_i18ngrep ! "usage" actual.err
+	! grep "usage" actual.err
 '
 
 test_expect_success 'tag usage error' '
@@ -53,7 +53,7 @@ test_expect_success 'branch --contains <inexistent_commit>' '
 	test_must_fail git branch --no-contains "nocommit" >actual 2>actual.err &&
 	test_line_count = 0 actual &&
 	test_i18ngrep "error" actual.err &&
-	test_i18ngrep ! "usage" actual.err
+	! grep "usage" actual.err
 '
 
 test_expect_success 'branch --no-contains <existent_commit>' '
@@ -66,7 +66,7 @@ test_expect_success 'branch --no-contains <inexistent_commit>' '
 	test_must_fail git branch --no-contains "nocommit" >actual 2>actual.err &&
 	test_line_count = 0 actual &&
 	test_i18ngrep "error" actual.err &&
-	test_i18ngrep ! "usage" actual.err
+	! grep "usage" actual.err
 '
 
 test_expect_success 'branch usage error' '
@@ -85,7 +85,7 @@ test_expect_success 'for-each-ref --contains <inexistent_object>' '
 	test_must_fail git for-each-ref --no-contains "noobject" >actual 2>actual.err &&
 	test_line_count = 0 actual &&
 	test_i18ngrep "error" actual.err &&
-	test_i18ngrep ! "usage" actual.err
+	! grep "usage" actual.err
 '
 
 test_expect_success 'for-each-ref --no-contains <existent_object>' '
@@ -98,7 +98,7 @@ test_expect_success 'for-each-ref --no-contains <inexistent_object>' '
 	test_must_fail git for-each-ref --no-contains "noobject" >actual 2>actual.err &&
 	test_line_count = 0 actual &&
 	test_i18ngrep "error" actual.err &&
-	test_i18ngrep ! "usage" actual.err
+	! grep "usage" actual.err
 '
 
 test_expect_success 'for-each-ref usage error' '
